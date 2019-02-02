@@ -32,25 +32,6 @@ public class garbage extends Application {
 
     stage.setTitle("Garbage on the Gooooo");
 
-    button = new Button();
-    button2 = new Button();
-    button3 = new Button();
-
-    button.setText("Garbage");
-    button2.setText("Recyclable");
-    button3.setText("Compost");
-
-    button.setOnAction(this::handle);
-    button2.setOnAction(this::handle);
-    button3.setOnAction(this::handle);
-
-    StackPane layout = new StackPane();
-    layout.getChildren().add(button);
-    layout.getChildren().add(button2);
-    layout.getChildren().add(button3);
-    scene = new Scene(layout, 600, 300, Color.GOLDENROD);
-    stage.setScene(scene);
-
     window = stage;
     Label label1 = new Label("Welcome to the first scene");
 
@@ -59,7 +40,7 @@ public class garbage extends Application {
 
     //Layout 1
     VBox layout1 = new VBox(20);
-    layout.getChildren().addAll(label1, MyPoints);
+    layout1.getChildren().addAll(label1, MyPoints);
     scene = new Scene(layout1, 200, 200);
 
     //MyPoints
@@ -72,6 +53,35 @@ public class garbage extends Application {
     scene1 = new Scene(layout2, 600, 300);
 
     window.setScene(scene);
+    window.show();
+
+    button = new Button();
+    button2 = new Button();
+    button3 = new Button();
+
+    button.setText("Garbage");
+    button2.setText("Recyclable");
+    button3.setText("Compost");
+
+    button.setOnAction(this::handle);
+    button2.setOnAction(this::handle);
+    button3.setOnAction(this::handle);
+
+    button.setTranslateX(10);
+    button.setTranslateY(-90);
+
+    button2.setTranslateX(100);
+    button2.setTranslateY(-90);
+
+    button3.setTranslateX(190);
+    button3.setTranslateY(-90);
+
+    StackPane layout = new StackPane();
+    layout.getChildren().add(button);
+    layout.getChildren().add(button2);
+    layout.getChildren().add(button3);
+    scene = new Scene(layout, 600, 300, Color.GOLDENROD);
+    stage.setScene(scene);
 
     stage.show();
 
@@ -84,6 +94,7 @@ public class garbage extends Application {
 
     } else if (event.getSource() == button2) {
       int points = 3;
+      button2.setStyle("-fx-background-color: #ff0000;");
     }
 
     else if (event.getSource() == button3) {
