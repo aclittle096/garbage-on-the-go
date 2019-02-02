@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -83,6 +84,9 @@ public class garbage extends Application {
     scene = new Scene(layout, 600, 300, Color.GOLDENROD);
     stage.setScene(scene);
 
+    /* The daily tips alert */
+    dailytipsbox.display("Daily tip of the day!", dailyTip());
+
     stage.show();
 
   } // start(Stage)
@@ -103,5 +107,34 @@ public class garbage extends Application {
 
   }
   //--------------------------------------------------------------------
+  public String dailyTip() {
+    Random rand = new Random();
+    int randomIndex = rand.nextInt(11);
+    ArrayList<String> theTips = new ArrayList<>();
+
+    try {
+      File file = new File("tips.txt");
+      BufferedReader reader = new BufferedReader(new FileReader(file));
+
+      String line = "";
+      line = reader.readLine();
+      while (line != null) {
+        theTips.add(line);
+        line = reader.readLine();
+      }
+    } catch (IOException e) {
+        System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
+    }
+
+    return theTips.get(randomIndex);
+  }
   //--------------------------------------------------------------------
 } // class garbage
+
+// class objects {
+//   HashMap<String, Integer> legend = new HashMap<>();
+//   legend.put("Food",x);
+//   legend.put("Bottles and Cans",x);
+//   legend.put("Paper",x);
+//   legend.put("")
+// }
