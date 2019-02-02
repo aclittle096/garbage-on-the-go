@@ -21,13 +21,11 @@ public class garbage extends Application {
 
   Stage window;
   Scene scene, scene1;
-
   //--------------------------------------------------------------------
   public static void main(String[] args) {
     launch(args);
   } // main(String[])
   //--------------------------------------------------------------------
-
   public void start(Stage stage) throws Exception {
     Group root = new Group();
 
@@ -39,16 +37,16 @@ public class garbage extends Application {
     Button MyPoints = new Button("See my points");
     MyPoints.setOnAction(e -> window.setScene(scene1));
 
-    //Layout 1
+    // Layout 1
     VBox layout1 = new VBox(20);
     layout1.getChildren().addAll(label1, MyPoints);
     scene = new Scene(layout1, 200, 200);
 
-    //MyPoints
+    // MyPoints
     Button home = new Button("Back to home");
     home.setOnAction(e -> window.setScene(scene));
 
-    //Layout2
+    // Layout2
     StackPane layout2 = new StackPane();
     layout2.getChildren().add(home);
     scene1 = new Scene(layout2, 600, 300);
@@ -84,10 +82,10 @@ public class garbage extends Application {
     scene = new Scene(layout, 600, 300, Color.GOLDENROD);
     stage.setScene(scene);
 
-    /* The daily tips alert */
+    // Alert for daily tips
     dailytipsbox.display("Daily tip of the day!", dailyTip());
 
-    stage.show();
+    stage.show(); // let the fun begin
 
   } // start(Stage)
 
@@ -113,7 +111,7 @@ public class garbage extends Application {
     ArrayList<String> theTips = new ArrayList<>();
 
     try {
-      File file = new File("tips.txt");
+      File file = new File("tips.txt"); // be sure this is included with application
       BufferedReader reader = new BufferedReader(new FileReader(file));
 
       String line = "";
@@ -127,8 +125,7 @@ public class garbage extends Application {
     }
 
     return theTips.get(randomIndex);
-  }
-  //--------------------------------------------------------------------
+  } // dailyTip()
 } // class garbage
 
 // class objects {
