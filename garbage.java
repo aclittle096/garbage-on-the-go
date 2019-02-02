@@ -9,11 +9,10 @@ public class garbage {
     System.out.println("Hello WORLD!!!!!!!!");
   }
 
-  public static void pickup(){
+  public static void pickup() {
     //a method designed to decide if the item is garbage or not
   }
 
-  
+  //making changes
 
 }
-
