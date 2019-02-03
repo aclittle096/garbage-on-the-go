@@ -13,11 +13,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.*;
+
+import java.io.FileInputStream;
 import java.awt.Rectangle;
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
 
-/**   A class designed to minimize resource usage.
+/**   An application designed to make the process of waste management fun and competitive.
 *     @author Alexander Little, Logan DiAdams */
 public class garbage extends Application {
   Button button;
@@ -30,7 +33,6 @@ public class garbage extends Application {
   Stage window;
   Scene scene, scene1;
   StackPane layout;
-
   //--------------------------------------------------------------------
   public static void main(String[] args) {
     launch(args);
@@ -45,6 +47,10 @@ public class garbage extends Application {
     text.setText("Choose a category: ");
     text.setTranslateX(-120);
     text.setTranslateY(-90);
+    text.setStyle("-fx-background-color: #ffffff"); /////////////
+
+    Image image = new Image("file:17996802-public-garbage-can.jpg ");
+    ImageView mv = new ImageView(image);
 
     //-window = stage;
     //-Label label1 = new Label("Welcome to the first scene");
@@ -62,6 +68,7 @@ public class garbage extends Application {
     //-Button home = new Button("Back to home");
     //-home.setOnAction(e -> window.setScene(scene));
     layout = new StackPane();
+    layout.getChildren().addAll(mv);
     //Layout2
     //StackPane layout2 = new StackPane();
     //layout2.getChildren().add(home);
@@ -103,10 +110,13 @@ public class garbage extends Application {
 
     button3.setTranslateX(190);
     button3.setTranslateY(-90);
-    
-    reset.setTranslateX(190);
-    reset.setTranslateY(50);
-    
+
+    reset.setTranslateX(20);
+    reset.setTranslateY(60);
+
+
+
+
     layout.getChildren().add(button);
     layout.getChildren().add(button2);
     layout.getChildren().add(button3);
@@ -121,32 +131,43 @@ public class garbage extends Application {
     scene = new Scene(layout, 600, 300, Color.GOLDENROD);
     stage.setScene(scene);
 
+    stage.setResizable(false);
+
     // Alert for daily tips
     dailytipsbox.display("Daily tip of the day!", dailyTip());
 
-    stage.show(); // let the fun begin
+    stage.show();
 
   } // start(Stage)
-
+  //--------------------------------------------------------------------
   public void handle(ActionEvent event) {
-
     Stage stage = new Stage();
 
-    if (event.getSource() == button) {
+    if (event.getSource() == button) { //garbage
       int points = 5;
       button.setStyle("-fx-background-color: #ff0000;");
 
-    }
+      Text t = new Text();
+      t.setText("You clicked garbage!");
+      t.setTranslateX(-120);
+      t.setTranslateY(10);
 
-    else if (event.getSource() == button2) {
+      tally("Garbage");
+    } // if
+
+    else if (event.getSource() == button2) { //recyclable
       int points = 3;
       button2.setStyle("-fx-background-color: #ff0000;");
-    }
 
-    else if (event.getSource() == button3) {
+      tally("Recyclable");
+    } // else if
+
+    else if (event.getSource() == button3) { //compost
       int points = 4;
       button3.setStyle("-fx-background-color: #ff0000;");
-    }
+
+      tally("Compost");
+    } // else if
     /*
     if (event.getSource() == home) {
       home.setOnAction(e -> window.setScene(scene));
@@ -182,11 +203,30 @@ public class garbage extends Application {
       //stage.setScene(scene);
 
       //scene.show();
-    }
+    } // else if
 
-  }
+    else if (event.getSource() == reset) {
+      try {
+        File tallyFile = new File("tally.txt");
+        FileOutputStream update = new FileOutputStream(tallyFile, false);
+
+        int points = 0;
+        int garbageTally = 0;
+        int recyclableTally = 0;
+        int compostTally = 0;
+
+        update.write(Integer.toString(points).getBytes());
+        update.write(Integer.toString(garbageTally).getBytes());
+        update.write(Integer.toString(recyclableTally).getBytes());
+        update.write(Integer.toString(compostTally).getBytes());
+        update.close();
+      } // try
+      catch (IOException e) {
+        System.out.println("You dun goofed bud");
+      } // catch
+    } // else if
+  } // handle(ActionEvent)
   //--------------------------------------------------------------------
-
   public String dailyTip() {
     Random rand = new Random();
     int randomIndex = rand.nextInt(11);
@@ -214,18 +254,16 @@ public class garbage extends Application {
     try {
       File file = new File("tally.txt");
       BufferedReader reader = new BufferedReader(new FileReader(file));
-      int points = Integer.parseInt(reader.readLine());
-      int garbageTally = Integer.parseInt(reader.readLine());
-      int recyclableTally = Integer.parseInt(reader.readLine());
-      int compostTally = Integer.parseInt(reader.readLine());
+      char[] theDigits = reader.readLine().toCharArray();
+      int points = Integer.parseInt(Character.toString(theDigits[0]));
+      int garbageTally = Integer.parseInt(Character.toString(theDigits[1]));
+      int recyclableTally = Integer.parseInt(Character.toString(theDigits[2]));
+      int compostTally = Integer.parseInt(Character.toString(theDigits[3]));
 
-      File tallyFile = new File("tally.txt");
-      FileOutputStream update = new FileOutputStream(tallyFile, false);
-
+      FileOutputStream update = new FileOutputStream(file, false);
       if (category.equals("Garbage")) {
         points += 2;
         garbageTally += 1;
-
         update.write(Integer.toString(points).getBytes());
         update.write(Integer.toString(garbageTally).getBytes());
         update.write(Integer.toString(recyclableTally).getBytes());
@@ -235,7 +273,6 @@ public class garbage extends Application {
       else if (category.equals("Recyclable")) {
         points += 5;
         recyclableTally += 1;
-
         update.write(Integer.toString(points).getBytes());
         update.write(Integer.toString(garbageTally).getBytes());
         update.write(Integer.toString(recyclableTally).getBytes());
@@ -245,7 +282,6 @@ public class garbage extends Application {
       else {
         points += 7;
         compostTally += 1;
-
         update.write(Integer.toString(points).getBytes());
         update.write(Integer.toString(garbageTally).getBytes());
         update.write(Integer.toString(recyclableTally).getBytes());
