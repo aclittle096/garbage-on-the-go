@@ -21,6 +21,13 @@ public class garbage extends Application {
 
   Stage window;
   Scene scene, scene1;
+
+  private File file = new File("tally.txt");
+  private BufferedReader reader = new BufferedReader(new FileReader(file));
+  points = Integer.parseInt(reader.readLine());
+  garbageTally = Integer.parseInt(reader.readLine());
+  recyclableTally = Integer.parseInt(reader.readLine());
+  compostTally = Integer.parseInt(reader.readLine());
   //--------------------------------------------------------------------
   public static void main(String[] args) {
     launch(args);
@@ -120,12 +127,32 @@ public class garbage extends Application {
         theTips.add(line);
         line = reader.readLine();
       }
-    } catch (IOException e) {
-        System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
+    }
+    catch (IOException e) {
+      System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
     }
 
     return theTips.get(randomIndex);
   } // dailyTip()
+  //--------------------------------------------------------------------
+  public void tally(String category) {
+    try {
+
+    }
+    catch (IOException e) {
+      System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
+    }
+
+    if (category.equals("Garbage")) {
+
+    }
+    else if (category.equals("Recyclable")) {
+
+    }
+    else {
+
+    }
+  }
 } // class garbage
 
 // class objects {
