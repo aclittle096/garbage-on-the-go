@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 import javafx.application.*;
+import javafx.scene.control.*;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.application.Application;
@@ -14,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.*;
+import javafx.geometry.Pos;
 
 import java.io.FileInputStream;
 import java.awt.Rectangle;
@@ -47,7 +49,7 @@ public class garbage extends Application {
     text.setText("Choose a category: ");
     text.setTranslateX(-120);
     text.setTranslateY(-90);
-    text.setStyle("-fx-background-color: #ffffff"); /////////////
+    text.setFill(Color.WHITE); /////////////
 
     Image image = new Image("file:17996802-public-garbage-can.jpg ");
     ImageView mv = new ImageView(image);
@@ -191,10 +193,11 @@ public class garbage extends Application {
       //Scene scene2 = new Scene(tabpane);
       //scene = new Scene(tabpane, 200, 200);
       Scene scene2 = new Scene(layout1);
+
       //stage.setScene(scene2);
       stage.setScene(scene2);
 
-      stage.show();
+      //stage.show();
       //Label label1 = new Label("Welcome to the first scene");
       //VBox layout1 = new VBox(20);
       //layout1.getChildren().addAll(label1, MyPoints);
@@ -203,26 +206,45 @@ public class garbage extends Application {
       //stage.setScene(scene);
 
       //scene.show();
+
+      //----------------------------------------
+    /*  Stage popUp = new Stage();
+
+      popUp.initModality(Modality.APPLICATION_MODAL);
+      popUp.setTitle("My Points!");
+      Label label1 = new Label("Scoreboard");
+      Button home = new Button("Go back to home!");
+      popUp.setOnAction(e -> popUp.close());
+      VBox layout1 = new VBox(10);
+      layout1.getChildren().addAll(label1, home);
+      layout1.setAlignment(Pos.CENTER);
+      Scene scene2 = new Scene(layout1, 300, 250);
+      popUp.setScene(scene2);
+      popUp.showAndWait();*/
+
     } // else if
 
     else if (event.getSource() == reset) {
       try {
         File tallyFile = new File("tally.txt");
         FileOutputStream update = new FileOutputStream(tallyFile, false);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(update));
 
-        int points = 0;
-        int garbageTally = 0;
-        int recyclableTally = 0;
-        int compostTally = 0;
+        bw.write("0");
+        bw.newLine();
+        bw.write("0");
+        bw.newLine();
+        bw.write("0");
+        bw.newLine();
+        bw.write("0");
+        bw.newLine();
 
-        update.write(Integer.toString(points).getBytes());
-        update.write(Integer.toString(garbageTally).getBytes());
-        update.write(Integer.toString(recyclableTally).getBytes());
-        update.write(Integer.toString(compostTally).getBytes());
         update.close();
+        bw.close();
       } // try
       catch (IOException e) {
         System.out.println("You dun goofed bud");
+        // e.printStackTrace();
       } // catch
     } // else if
   } // handle(ActionEvent)
@@ -242,6 +264,7 @@ public class garbage extends Application {
         theTips.add(line);
         line = reader.readLine();
       }
+      reader.close();
     }
     catch (IOException e) {
       System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
@@ -254,40 +277,57 @@ public class garbage extends Application {
     try {
       File file = new File("tally.txt");
       BufferedReader reader = new BufferedReader(new FileReader(file));
-      char[] theDigits = reader.readLine().toCharArray();
-      int points = Integer.parseInt(Character.toString(theDigits[0]));
-      int garbageTally = Integer.parseInt(Character.toString(theDigits[1]));
-      int recyclableTally = Integer.parseInt(Character.toString(theDigits[2]));
-      int compostTally = Integer.parseInt(Character.toString(theDigits[3]));
+
+      String[] theDigits = new String[4];
+      for (int i = 0; i < 4; i++) {
+        theDigits[i] = reader.readLine();
+      }
+      int points = Integer.parseInt(theDigits[0]);
+      int garbageTally = Integer.parseInt(theDigits[1]);
+      int recyclableTally = Integer.parseInt(theDigits[2]);
+      int compostTally = Integer.parseInt(theDigits[3]);
 
       FileOutputStream update = new FileOutputStream(file, false);
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(update));
       if (category.equals("Garbage")) {
         points += 2;
         garbageTally += 1;
-        update.write(Integer.toString(points).getBytes());
-        update.write(Integer.toString(garbageTally).getBytes());
-        update.write(Integer.toString(recyclableTally).getBytes());
-        update.write(Integer.toString(compostTally).getBytes());
-        update.close();
+        bw.write(points);
+        bw.newLine();
+        bw.write(garbageTally);
+        bw.newLine();
+        bw.write(recyclableTally);
+        bw.newLine();
+        bw.write(compostTally);
+        bw.newLine();
       } // if
       else if (category.equals("Recyclable")) {
         points += 5;
         recyclableTally += 1;
-        update.write(Integer.toString(points).getBytes());
-        update.write(Integer.toString(garbageTally).getBytes());
-        update.write(Integer.toString(recyclableTally).getBytes());
-        update.write(Integer.toString(compostTally).getBytes());
-        update.close();
+        bw.write(points);
+        bw.newLine();
+        bw.write(garbageTally);
+        bw.newLine();
+        bw.write(recyclableTally);
+        bw.newLine();
+        bw.write(compostTally);
+        bw.newLine();
       } // else if
       else {
         points += 7;
         compostTally += 1;
-        update.write(Integer.toString(points).getBytes());
-        update.write(Integer.toString(garbageTally).getBytes());
-        update.write(Integer.toString(recyclableTally).getBytes());
-        update.write(Integer.toString(compostTally).getBytes());
-        update.close();
+        bw.write(points);
+        bw.newLine();
+        bw.write(garbageTally);
+        bw.newLine();
+        bw.write(recyclableTally);
+        bw.newLine();
+        bw.write(compostTally);
+        bw.newLine();
       } // else
+      reader.close();
+      bw.close();
+      update.close();
     } // try
     catch (IOException e) {
         System.out.println("Wait... what happened to the files? Was it you, Logan?");
