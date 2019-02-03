@@ -22,12 +22,18 @@ public class garbage extends Application {
   Stage window;
   Scene scene, scene1;
 
-  private File file = new File("tally.txt");
-  private BufferedReader reader = new BufferedReader(new FileReader(file));
-  points = Integer.parseInt(reader.readLine());
-  garbageTally = Integer.parseInt(reader.readLine());
-  recyclableTally = Integer.parseInt(reader.readLine());
-  compostTally = Integer.parseInt(reader.readLine());
+  // Acquiring the stats of the user from tally.txt
+  try {
+    private File file = new File("tally.txt");
+    private BufferedReader reader = new BufferedReader(new FileReader(file));
+    points = Integer.parseInt(reader.readLine());
+    garbageTally = Integer.parseInt(reader.readLine());
+    recyclableTally = Integer.parseInt(reader.readLine());
+    compostTally = Integer.parseInt(reader.readLine());
+  }
+  catch (IOException e) {
+    System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
+  }
   //--------------------------------------------------------------------
   public static void main(String[] args) {
     launch(args);
@@ -136,29 +142,38 @@ public class garbage extends Application {
   } // dailyTip()
   //--------------------------------------------------------------------
   public void tally(String category) {
-    try {
-
-    }
-    catch (IOException e) {
-      System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
-    }
+    File tallyFile = new File("tally.txt");
+    FileOutputStream update = new FileOutputStream(tallyFile, false);
 
     if (category.equals("Garbage")) {
+      points += 2;
+      garbageTally += 1;
 
-    }
+      update.write(points.getBytes());
+      update.write(garbageTally.getBytes());
+      update.write(recyclableTally.getBytes());
+      update.write(compostTally.getBytes());
+      update.close();
+    } // if
     else if (category.equals("Recyclable")) {
+      points += 5;
+      recyclableTally += 1;
 
-    }
+      update.write(points.getBytes());
+      update.write(garbageTally.getBytes());
+      update.write(recyclableTally.getBytes());
+      update.write(compostTally.getBytes());
+      update.close();
+    } // else if
     else {
+      points += 7;
+      compostTally += 1;
 
-    }
-  }
+      update.write(points.getBytes());
+      update.write(garbageTally.getBytes());
+      update.write(recyclableTally.getBytes());
+      update.write(compostTally.getBytes());
+      update.close();
+    } // else
+  } // tally(String)
 } // class garbage
-
-// class objects {
-//   HashMap<String, Integer> legend = new HashMap<>();
-//   legend.put("Food",x);
-//   legend.put("Bottles and Cans",x);
-//   legend.put("Paper",x);
-//   legend.put("")
-// }
