@@ -196,6 +196,7 @@ public class garbage extends Application {
   } // handle(ActionEvent)
   //--------------------------------------------------------------------
 
+  //--------------------------------------------------------------------
   public String dailyTip() {
     Random rand = new Random();
     int randomIndex = rand.nextInt(11);
