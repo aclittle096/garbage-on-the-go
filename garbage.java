@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 import javafx.application.*;
+import javafx.scene.control.*;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.application.Application;
@@ -13,19 +14,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import java.awt.Rectangle;
+import javafx.scene.image.*;
+import javafx.geometry.Pos;
+import java.io.FileInputStream;
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
 
-/**   A class designed to minimize resource usage.
+/**   An application designed to make the process of waste management fun and competitive.
 *     @author Alexander Little, Logan DiAdams */
 public class garbage extends Application {
-  Button button;
-  Button button2;
-  Button button3;
+
+  ToggleButton button;
+  ToggleButton button2;
+  ToggleButton button3;
   Button reset;
   Button MyPoints;
-  //Button home;
 
   Stage window;
   Scene scene, scene1;
@@ -36,6 +39,7 @@ public class garbage extends Application {
     launch(args);
   } // main(String[])
   //--------------------------------------------------------------------
+
   public void start(Stage stage) throws Exception {
     Group root = new Group();
 
@@ -45,38 +49,18 @@ public class garbage extends Application {
     text.setText("Choose a category: ");
     text.setTranslateX(-120);
     text.setTranslateY(-90);
+    text.setFill(Color.WHITE);
 
-    //-window = stage;
-    //-Label label1 = new Label("Welcome to the first scene");
+    Image image = new Image("file:17996802-public-garbage-can.jpg ");
+    ImageView mv = new ImageView(image);
 
-
-    //Button MyPoints = new Button("See my points");
-    //MyPoints.setOnAction(e -> window.setScene(scene1));
-
-    //-Layout 1
-    //-VBox layout1 = new VBox(20);
-    //-layout1.getChildren().addAll(label1, MyPoints);
-    //-scene = new Scene(layout1, 200, 200);
-
-    //MyPoints
-    //-Button home = new Button("Back to home");
-    //-home.setOnAction(e -> window.setScene(scene));
     layout = new StackPane();
-    //Layout2
-    //StackPane layout2 = new StackPane();
-    //layout2.getChildren().add(home);
-    //layout.getChildren().add(home);
-    //scene1 = new Scene(layout, 600, 300);
-    //scene1 = new Scene(layout2, 600, 300);
-
-
-    //window.setScene(scene);
-    //window.show();
+    layout.getChildren().addAll(mv);
 
     MyPoints = new Button();
-    button = new Button();
-    button2 = new Button();
-    button3 = new Button();
+    button = new ToggleButton();
+    button2 = new ToggleButton();
+    button3 = new ToggleButton();
     reset = new Button();
 
     MyPoints.setText("See my points!");
@@ -103,59 +87,63 @@ public class garbage extends Application {
 
     button3.setTranslateX(190);
     button3.setTranslateY(-90);
-    
-    reset.setTranslateX(190);
-    reset.setTranslateY(50);
-    
+
+    reset.setTranslateX(20);
+    reset.setTranslateY(60);
+
+    //layout.getChildren().setAll(visibilityControl);
+    layout.getStylesheets().add(getClass().getResource("colored-toggle.css").toExternalForm());
+
     layout.getChildren().add(button);
     layout.getChildren().add(button2);
     layout.getChildren().add(button3);
     layout.getChildren().add(MyPoints);
     layout.getChildren().add(text);
     layout.getChildren().add(reset);
-    //layout.getChildren().add(home);
-    //layout.getChildren().add(MyPoints);
 
-    //scene = new Scene(tabpane);
-
-    scene = new Scene(layout, 600, 300, Color.GOLDENROD);
+    scene = new Scene(layout, 600, 300);
     stage.setScene(scene);
+
+    stage.setResizable(true);
 
     // Alert for daily tips
     dailytipsbox.display("Daily tip of the day!", dailyTip());
 
-    stage.show(); // let the fun begin
+    stage.show();
 
   } // start(Stage)
+  //--------------------------------------------------------------------
 
   public void handle(ActionEvent event) {
-
     Stage stage = new Stage();
 
-    if (event.getSource() == button) {
+    if (event.getSource() == button) { //garbage
       int points = 5;
-      button.setStyle("-fx-background-color: #ff0000;");
+      //button.setStyle("-fx-background-color: #ff0000;");
 
-    }
+      Text t = new Text();
+      t.setText("You clicked garbage!");
+      t.setTranslateX(-120);
+      t.setTranslateY(10);
 
-    else if (event.getSource() == button2) {
+      tally("Garbage");
+    } // if
+
+    else if (event.getSource() == button2) { //recyclable
       int points = 3;
-      button2.setStyle("-fx-background-color: #ff0000;");
-    }
+      //button2.setStyle("-fx-background-color: #ff0000;");
 
-    else if (event.getSource() == button3) {
+      tally("Recyclable");
+    } // else if
+
+    else if (event.getSource() == button3) { //compost
       int points = 4;
-      button3.setStyle("-fx-background-color: #ff0000;");
-    }
-    /*
-    if (event.getSource() == home) {
-      home.setOnAction(e -> window.setScene(scene));
-    }
-    */
+      //button3.setStyle("-fx-background-color: #ff0000;");
+
+      tally("Compost");
+    } // else if
 
     else if (event.getSource() == MyPoints) {
-      //MyPoints.setOnAction(e -> window.setScene(scene1));
-      //newStage.setTitle("Garbage on the Gooooo");
 
       TabPane tabpane = new TabPane();
       Tab newTab = new Tab();
@@ -163,28 +151,49 @@ public class garbage extends Application {
       //newTab.setContent(new Rectangle(200, 200, Color.LIGHTSTEELBLUE));
 
       tabpane.getTabs().add(newTab);
-      //Label label1 = new Label("Welcome to the first scene");
       StackPane layout1 = new StackPane();
       layout.getChildren().add(tabpane);
       newTab.setContent(layout1);
-      //Scene scene2 = new Scene(tabpane);
-      //scene = new Scene(tabpane, 200, 200);
       Scene scene2 = new Scene(layout1);
+
+      Button home = new Button("Back to home");
+      //home.setOnAction(e -> stage.setScene(scene));
+      home.setOnAction(e -> {
+        newTab.getTabPane().getTabs().remove(newTab);
+        //layout1.getChildren().add(layout);
+      });
+
+      layout1.getChildren().add(home);
+
       //stage.setScene(scene2);
       stage.setScene(scene2);
 
-      stage.show();
-      //Label label1 = new Label("Welcome to the first scene");
-      //VBox layout1 = new VBox(20);
-      //layout1.getChildren().addAll(label1, MyPoints);
-      //System.out.println("HELLO");
-      //Scene scene = new Scene(layout1, 200, 200);
-      //stage.setScene(scene);
+    } // else if
 
-      //scene.show();
-    }
+    else if (event.getSource() == reset) {
+      try {
+        File tallyFile = new File("tally.txt");
+        FileOutputStream update = new FileOutputStream(tallyFile, false);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(update));
 
-  }
+        bw.write("0" + " ");
+        bw.newLine();
+        bw.write("0" + " ");
+        bw.newLine();
+        bw.write("0" + " ");
+        bw.newLine();
+        bw.write("0" + " ");
+        bw.newLine();
+
+        // update.close();
+        // bw.close();
+      } // try
+      catch (IOException e) {
+        System.out.println("You dun goofed bud");
+        // e.printStackTrace();
+      } // catch
+    } // else if
+  } // handle(ActionEvent)
   //--------------------------------------------------------------------
 
   public String dailyTip() {
@@ -202,59 +211,72 @@ public class garbage extends Application {
         theTips.add(line);
         line = reader.readLine();
       }
-    }
-    catch (IOException e) {
+      reader.close();
+    } catch (IOException e) {
       System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
     }
 
     return theTips.get(randomIndex);
   } // dailyTip()
   //--------------------------------------------------------------------
+
   public void tally(String category) {
     try {
       File file = new File("tally.txt");
       BufferedReader reader = new BufferedReader(new FileReader(file));
-      int points = Integer.parseInt(reader.readLine());
-      int garbageTally = Integer.parseInt(reader.readLine());
-      int recyclableTally = Integer.parseInt(reader.readLine());
-      int compostTally = Integer.parseInt(reader.readLine());
+      String[] theDigits = new String[4];
+      for (int i = 0; i < 4; i++) {
+        theDigits[i] = reader.readLine();
+      }
+      int points = Integer.parseInt(theDigits[0]);
+      int garbageTally = Integer.parseInt(theDigits[1]);
+      int recyclableTally = Integer.parseInt(theDigits[2]);
+      int compostTally = Integer.parseInt(theDigits[3]);
 
-      File tallyFile = new File("tally.txt");
-      FileOutputStream update = new FileOutputStream(tallyFile, false);
-
+      FileOutputStream update = new FileOutputStream(file, false);
+      BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(update));
       if (category.equals("Garbage")) {
         points += 2;
         garbageTally += 1;
-
-        update.write(Integer.toString(points).getBytes());
-        update.write(Integer.toString(garbageTally).getBytes());
-        update.write(Integer.toString(recyclableTally).getBytes());
-        update.write(Integer.toString(compostTally).getBytes());
-        update.close();
+        bw.write(points + " ");
+        bw.newLine();
+        bw.write(garbageTally + " ");
+        bw.newLine();
+        bw.write(recyclableTally + " ");
+        bw.newLine();
+        bw.write(compostTally);
+        bw.newLine();
       } // if
       else if (category.equals("Recyclable")) {
         points += 5;
         recyclableTally += 1;
-
-        update.write(Integer.toString(points).getBytes());
-        update.write(Integer.toString(garbageTally).getBytes());
-        update.write(Integer.toString(recyclableTally).getBytes());
-        update.write(Integer.toString(compostTally).getBytes());
-        update.close();
+        bw.write(points + " ");
+        bw.newLine();
+        bw.write(garbageTally + " ");
+        bw.newLine();
+        bw.write(recyclableTally + " ");
+        bw.newLine();
+        bw.write(compostTally);
+        bw.newLine();
       } // else if
       else {
         points += 7;
         compostTally += 1;
-
-        update.write(Integer.toString(points).getBytes());
-        update.write(Integer.toString(garbageTally).getBytes());
-        update.write(Integer.toString(recyclableTally).getBytes());
-        update.write(Integer.toString(compostTally).getBytes());
-        update.close();
+        bw.write(points + " ");
+        bw.newLine();
+        bw.write(garbageTally + " ");
+        bw.newLine();
+        bw.write(recyclableTally + " ");
+        bw.newLine();
+        bw.write(compostTally);
+        bw.newLine();
       } // else
+      reader.close();
+      bw.close();
+      update.close();
     } // try
     catch (IOException e) {
-        System.out.println("Wait... what happened to the files? Was it you, Logan?");
+      System.out.println("Wait... what happened to the files? Was it you, Logan?"); //never!!!
     } // catch
   } // tally(String)
 } // class garbage
