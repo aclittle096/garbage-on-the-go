@@ -16,21 +16,25 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.*;
 import javafx.geometry.Pos;
+<<<<<<< HEAD
+import java.io.FileInputStream;
+=======
 
 import java.io.FileInputStream;
 import java.awt.Rectangle;
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
 
 /**   An application designed to make the process of waste management fun and competitive.
 *     @author Alexander Little, Logan DiAdams */
 public class garbage extends Application {
-  Button button;
-  Button button2;
-  Button button3;
+
+  ToggleButton button;
+  ToggleButton button2;
+  ToggleButton button3;
   Button reset;
   Button MyPoints;
-  //Button home;
 
   Stage window;
   Scene scene, scene1;
@@ -40,6 +44,7 @@ public class garbage extends Application {
     launch(args);
   } // main(String[])
   //--------------------------------------------------------------------
+
   public void start(Stage stage) throws Exception {
     Group root = new Group();
 
@@ -49,28 +54,22 @@ public class garbage extends Application {
     text.setText("Choose a category: ");
     text.setTranslateX(-120);
     text.setTranslateY(-90);
+<<<<<<< HEAD
+    text.setFill(Color.WHITE);
+=======
     text.setFill(Color.WHITE); /////////////
 
     Image image = new Image("file:17996802-public-garbage-can.jpg ");
     ImageView mv = new ImageView(image);
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
 
-    //-window = stage;
-    //-Label label1 = new Label("Welcome to the first scene");
+    Image image = new Image("file:17996802-public-garbage-can.jpg ");
+    ImageView mv = new ImageView(image);
 
-
-    //Button MyPoints = new Button("See my points");
-    //MyPoints.setOnAction(e -> window.setScene(scene1));
-
-    //-Layout 1
-    //-VBox layout1 = new VBox(20);
-    //-layout1.getChildren().addAll(label1, MyPoints);
-    //-scene = new Scene(layout1, 200, 200);
-
-    //MyPoints
-    //-Button home = new Button("Back to home");
-    //-home.setOnAction(e -> window.setScene(scene));
     layout = new StackPane();
     layout.getChildren().addAll(mv);
+<<<<<<< HEAD
+=======
     //Layout2
     //StackPane layout2 = new StackPane();
     //layout2.getChildren().add(home);
@@ -81,11 +80,12 @@ public class garbage extends Application {
 
     //window.setScene(scene);
     //window.show();
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
 
     MyPoints = new Button();
-    button = new Button();
-    button2 = new Button();
-    button3 = new Button();
+    button = new ToggleButton();
+    button2 = new ToggleButton();
+    button3 = new ToggleButton();
     reset = new Button();
 
     MyPoints.setText("See my points!");
@@ -116,8 +116,13 @@ public class garbage extends Application {
     reset.setTranslateX(20);
     reset.setTranslateY(60);
 
+<<<<<<< HEAD
+    //layout.getChildren().setAll(visibilityControl);
+    layout.getStylesheets().add(getClass().getResource("colored-toggle.css").toExternalForm());
+=======
 
 
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
 
     layout.getChildren().add(button);
     layout.getChildren().add(button2);
@@ -125,15 +130,15 @@ public class garbage extends Application {
     layout.getChildren().add(MyPoints);
     layout.getChildren().add(text);
     layout.getChildren().add(reset);
-    //layout.getChildren().add(home);
-    //layout.getChildren().add(MyPoints);
 
-    //scene = new Scene(tabpane);
-
-    scene = new Scene(layout, 600, 300, Color.GOLDENROD);
+    scene = new Scene(layout, 600, 300);
     stage.setScene(scene);
 
+<<<<<<< HEAD
+    stage.setResizable(true);
+=======
     stage.setResizable(false);
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
 
     // Alert for daily tips
     dailytipsbox.display("Daily tip of the day!", dailyTip());
@@ -142,12 +147,16 @@ public class garbage extends Application {
 
   } // start(Stage)
   //--------------------------------------------------------------------
+<<<<<<< HEAD
+
+=======
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
   public void handle(ActionEvent event) {
     Stage stage = new Stage();
 
     if (event.getSource() == button) { //garbage
       int points = 5;
-      button.setStyle("-fx-background-color: #ff0000;");
+      //button.setStyle("-fx-background-color: #ff0000;");
 
       Text t = new Text();
       t.setText("You clicked garbage!");
@@ -159,6 +168,19 @@ public class garbage extends Application {
 
     else if (event.getSource() == button2) { //recyclable
       int points = 3;
+<<<<<<< HEAD
+      //button2.setStyle("-fx-background-color: #ff0000;");
+
+      tally("Recyclable");
+    } // else if
+
+    else if (event.getSource() == button3) { //compost
+      int points = 4;
+      //button3.setStyle("-fx-background-color: #ff0000;");
+
+      tally("Compost");
+    } // else if
+=======
       button2.setStyle("-fx-background-color: #ff0000;");
 
       tally("Recyclable");
@@ -175,10 +197,9 @@ public class garbage extends Application {
       home.setOnAction(e -> window.setScene(scene));
     }
     */
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
 
     else if (event.getSource() == MyPoints) {
-      //MyPoints.setOnAction(e -> window.setScene(scene1));
-      //newStage.setTitle("Garbage on the Gooooo");
 
       TabPane tabpane = new TabPane();
       Tab newTab = new Tab();
@@ -186,13 +207,25 @@ public class garbage extends Application {
       //newTab.setContent(new Rectangle(200, 200, Color.LIGHTSTEELBLUE));
 
       tabpane.getTabs().add(newTab);
-      //Label label1 = new Label("Welcome to the first scene");
       StackPane layout1 = new StackPane();
       layout.getChildren().add(tabpane);
       newTab.setContent(layout1);
-      //Scene scene2 = new Scene(tabpane);
-      //scene = new Scene(tabpane, 200, 200);
       Scene scene2 = new Scene(layout1);
+<<<<<<< HEAD
+
+      Button home = new Button("Back to home");
+      //home.setOnAction(e -> stage.setScene(scene));
+      home.setOnAction(e -> {
+        newTab.getTabPane().getTabs().remove(newTab);
+        //layout1.getChildren().add(layout);
+      });
+
+      layout1.getChildren().add(home);
+
+      //stage.setScene(scene2);
+      stage.setScene(scene2);
+
+=======
 
       //stage.setScene(scene2);
       stage.setScene(scene2);
@@ -222,6 +255,7 @@ public class garbage extends Application {
       popUp.setScene(scene2);
       popUp.showAndWait();*/
 
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
     } // else if
 
     else if (event.getSource() == reset) {
@@ -230,6 +264,27 @@ public class garbage extends Application {
         FileOutputStream update = new FileOutputStream(tallyFile, false);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(update));
 
+<<<<<<< HEAD
+        bw.write("0" + " ");
+        bw.newLine();
+        bw.write("0" + " ");
+        bw.newLine();
+        bw.write("0" + " ");
+        bw.newLine();
+        bw.write("0" + " ");
+        bw.newLine();
+
+        // update.close();
+        // bw.close();
+      } // try
+      catch (IOException e) {
+        System.out.println("You dun goofed bud");
+        // e.printStackTrace();
+      } // catch
+    } // else if
+  } // handle(ActionEvent)
+  //--------------------------------------------------------------------
+=======
         bw.write("0");
         bw.newLine();
         bw.write("0");
@@ -238,6 +293,7 @@ public class garbage extends Application {
         bw.newLine();
         bw.write("0");
         bw.newLine();
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
 
         update.close();
         bw.close();
@@ -265,19 +321,27 @@ public class garbage extends Application {
         line = reader.readLine();
       }
       reader.close();
+<<<<<<< HEAD
+    } catch (IOException e) {
+=======
     }
     catch (IOException e) {
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
       System.out.println("It appears the file necessary for the daily tips is missing and cannot be found.");
     }
 
     return theTips.get(randomIndex);
   } // dailyTip()
   //--------------------------------------------------------------------
+
   public void tally(String category) {
     try {
       File file = new File("tally.txt");
       BufferedReader reader = new BufferedReader(new FileReader(file));
+<<<<<<< HEAD
+=======
 
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
       String[] theDigits = new String[4];
       for (int i = 0; i < 4; i++) {
         theDigits[i] = reader.readLine();
@@ -292,11 +356,19 @@ public class garbage extends Application {
       if (category.equals("Garbage")) {
         points += 2;
         garbageTally += 1;
+<<<<<<< HEAD
+        bw.write(points + " ");
+        bw.newLine();
+        bw.write(garbageTally + " ");
+        bw.newLine();
+        bw.write(recyclableTally + " ");
+=======
         bw.write(points);
         bw.newLine();
         bw.write(garbageTally);
         bw.newLine();
         bw.write(recyclableTally);
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
         bw.newLine();
         bw.write(compostTally);
         bw.newLine();
@@ -304,11 +376,19 @@ public class garbage extends Application {
       else if (category.equals("Recyclable")) {
         points += 5;
         recyclableTally += 1;
+<<<<<<< HEAD
+        bw.write(points + " ");
+        bw.newLine();
+        bw.write(garbageTally + " ");
+        bw.newLine();
+        bw.write(recyclableTally + " ");
+=======
         bw.write(points);
         bw.newLine();
         bw.write(garbageTally);
         bw.newLine();
         bw.write(recyclableTally);
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
         bw.newLine();
         bw.write(compostTally);
         bw.newLine();
@@ -316,11 +396,19 @@ public class garbage extends Application {
       else {
         points += 7;
         compostTally += 1;
+<<<<<<< HEAD
+        bw.write(points + " ");
+        bw.newLine();
+        bw.write(garbageTally + " ");
+        bw.newLine();
+        bw.write(recyclableTally + " ");
+=======
         bw.write(points);
         bw.newLine();
         bw.write(garbageTally);
         bw.newLine();
         bw.write(recyclableTally);
+>>>>>>> 01c7360bb8d94e0573c3a1cd66089926f63d2405
         bw.newLine();
         bw.write(compostTally);
         bw.newLine();
@@ -330,7 +418,7 @@ public class garbage extends Application {
       update.close();
     } // try
     catch (IOException e) {
-        System.out.println("Wait... what happened to the files? Was it you, Logan?");
+      System.out.println("Wait... what happened to the files? Was it you, Logan?"); //never!!!
     } // catch
   } // tally(String)
 } // class garbage
