@@ -277,7 +277,7 @@ public class garbage extends Application {
       update.close();
     } // try
     catch (IOException e) {
-      System.out.println("Wait... what happened to the files? Was it you, Logan?"); //never!!!
+      System.out.println("Wait... what happened to the files? Was it you, Logan?"); //never!!!  sure . . .
     } // catch
   } // tally(String)
 } // class garbage
